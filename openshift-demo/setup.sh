@@ -33,7 +33,7 @@ echo "	--> Expose the generic endpoint"
 oc get route php || oc expose service php || { echo "FAILED: Could not verify route to application frontend" && exit 1; } || { echo "FAILED: Could patch frontend" && exit 1; }
 
 echo "	--> Expose an endpoint for external users...start them with BLUE"
-oc get route devnation-visitors || oc expose service blue --name devnation-visitors -l app=${OPENSHIFT_APPLICATION_NAME} --hostname="devnation-visitors.apps.rhsademo.net"
+oc get route devnation-visitors || oc expose service php --name devnation-visitors -l app=${OPENSHIFT_APPLICATION_NAME} --hostname="devnation-visitors.apps.rhsademo.net"
 
 #firefox php-${OPENSHIFT_PROJECT}.apps.rhsademo.net?refresh=10
 
@@ -57,6 +57,9 @@ oc get svc/blue && oc patch svc/blue -p '{"metadata" : { "annotations" : { "serv
 echo "	--> Waiting for the blue nad green applications to start....press any key to proceed"
 while ! oc get pods | grep blue | grep Running ; do echo -n "." && { read -t 1 -n 1 && break ; } && sleep 1s; done; echo ""
 while ! oc get pods | grep green | grep Running ; do echo -n "." && { read -t 1 -n 1 && break ; } && sleep 1s; done; echo ""
+
+echo "	--> Let's start everyone at blue"
+oc patch route/devnation-visitors -p '{"spec" : { "to" : { "name" : "blue"} } }'
 
 echo "	--> switch visitors from BLUE to GREEN"
 echo "		--> press enter to continue" && read

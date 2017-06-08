@@ -1,0 +1,158 @@
+{
+    "apiVersion": "v1",
+    "kind": "DeploymentConfig",
+    "metadata": {
+        "annotations": {
+            "openshift.io/generated-by": "OpenShiftNewApp"
+        },
+        "creationTimestamp": "2017-06-08T14:18:14Z",
+        "generation": 3,
+        "labels": {
+            "app": "myphp",
+            "demophase": "statusquo",
+            "part": "frontend"
+        },
+        "name": "php",
+        "namespace": "mepley-devnation-federal-2017",
+        "resourceVersion": "9171848",
+        "selfLink": "/oapi/v1/namespaces/mepley-devnation-federal-2017/deploymentconfigs/php",
+        "uid": "4f255006-4c55-11e7-83f7-121b3566b20e"
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "app": "myphp",
+            "demophase": "statusquo",
+            "deploymentconfig": "php",
+            "part": "frontend"
+        },
+        "strategy": {
+            "resources": {},
+            "rollingParams": {
+                "intervalSeconds": 1,
+                "maxSurge": "25%",
+                "maxUnavailable": "25%",
+                "timeoutSeconds": 600,
+                "updatePeriodSeconds": 1
+            },
+            "type": "Rolling"
+        },
+        "template": {
+            "metadata": {
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftNewApp"
+                },
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "myphp",
+                    "demophase": "statusquo",
+                    "deploymentconfig": "php",
+                    "part": "frontend"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "MYSQL_SERVICE_DATABASE",
+                                "value": "myphp"
+                            },
+                            {
+                                "name": "MYSQL_SERVICE_HOST",
+                                "value": "mysql.mepley-devnation-federal-2017.svc.cluster.local"
+                            },
+                            {
+                                "name": "MYSQL_SERVICE_PASSWORD",
+                                "value": "myphp"
+                            },
+                            {
+                                "name": "MYSQL_SERVICE_PORT",
+                                "value": "3306"
+                            },
+                            {
+                                "name": "MYSQL_SERVICE_USERNAME",
+                                "value": "myphp"
+                            }
+                        ],
+                        "image": "php:latest",
+                        "imagePullPolicy": "Always",
+                        "livenessProbe": {
+                            "failureThreshold": 4,
+                            "httpGet": {
+                                "path": "/",
+                                "port": 8080,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 4
+                        },
+                        "name": "php",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 4,
+                            "httpGet": {
+                                "path": "/",
+                                "port": 8080,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 4
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "400m"
+                            },
+                            "requests": {
+                                "cpu": "200m"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "restartPolicy": "Always",
+                "securityContext": {},
+                "terminationGracePeriodSeconds": 30
+            }
+        },
+        "test": false,
+        "triggers": [
+            {
+                "type": "ConfigChange"
+            },
+            {
+                "imageChangeParams": {
+                    "automatic": true,
+                    "containerNames": [
+                        "php"
+                    ],
+                    "from": {
+                        "kind": "ImageStreamTag",
+                        "name": "php:latest",
+                        "namespace": "mepley-devnation-federal-2017"
+                    }
+                },
+                "type": "ImageChange"
+            }
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2017-06-08T14:18:14Z",
+                "message": "Deployment config does not have minimum availability.",
+                "status": "False",
+                "type": "Available"
+            }
+        ],
+        "observedGeneration": 3
+    }
+}
