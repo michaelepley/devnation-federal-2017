@@ -5,7 +5,7 @@
         "annotations": {
             "openshift.io/generated-by": "OpenShiftNewApp"
         },
-        "creationTimestamp": "2017-06-08T14:18:14Z",
+        "creationTimestamp": "2017-06-08T17:28:37Z",
         "labels": {
             "app": "myphp",
             "demophase": "statusquo",
@@ -13,9 +13,9 @@
         },
         "name": "php",
         "namespace": "mepley-devnation-federal-2017",
-        "resourceVersion": "9171828",
+        "resourceVersion": "9181074",
         "selfLink": "/oapi/v1/namespaces/mepley-devnation-federal-2017/buildconfigs/php",
-        "uid": "4f236ee3-4c55-11e7-83f7-121b3566b20e"
+        "uid": "e8107abe-4c6f-11e7-83f7-121b3566b20e"
     },
     "spec": {
         "nodeSelector": null,
@@ -48,13 +48,13 @@
         "triggers": [
             {
                 "github": {
-                    "secret": "KWhlGAc2pg0JjcEsQAQl"
+                    "secret": "H8azQLjCCfevilgh69pU"
                 },
                 "type": "GitHub"
             },
             {
                 "generic": {
-                    "secret": "n8U7odudayle5CWFvynO"
+                    "secret": "3FwvaxdJjBzmVg0Bl8ph"
                 },
                 "type": "Generic"
             },

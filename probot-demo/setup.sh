@@ -8,10 +8,10 @@
 
 # See https://docs.openshift.com/enterprise/latest for general openshift docs
 
-echo "Create a Devnation Fedevnation-visitorsderal 2017 demo environment"
+echo "Create a Devnation Federal 2017 demo environment"
 echo "	--> make sure we are logged in"
 echo "	--> create a project for our work"
-oc project ${OPENSHIFT_PROJECT} || oc new-project ${OPENSHIFT_PROJECT} ${OPENSHIFT_PROJECT_DESCRIPTION+"--description"} ${OPENSHIFT_PROJECT_DESCRIPTION} ${OPENSHIFT_PROJECT_DISPLAY_NAME+"--display-name"} ${OPENSHIFT_PROJECT_DISPLAY_NAME} || { echo "FAILED: could not create project" && exit 1 ; }
+oc project ${OPENSHIFT_PROJECT} || oc new-project ${OPENSHIFT_PROJECT} ${OPENSHIFT_PROJECT_DESCRIPTION:+"--description"} ${OPENSHIFT_PROJECT_DESCRIPTION} ${OPENSHIFT_PROJECT_DISPLAY_NAME:+"--display-name"} ${OPENSHIFT_PROJECT_DISPLAY_NAME} || { echo "FAILED: could not create project" && exit 1 ; }
 
 oc whoami || oc login master.rhsademo.net -u ${OPENSHIFT_USER} -p ${OPENSHIFT_RHSADEMO_USER_PASSWORD_DEFAULT}
 echo "========== STATUS QUO deployment =========="

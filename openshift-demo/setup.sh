@@ -10,10 +10,10 @@
 
 echo "Create a Devnation Federal 2017 demo environment"
 echo "	--> make sure we are logged in"
-echo "	--> create a project for our work"
-oc project ${OPENSHIFT_PROJECT} || oc new-project ${OPENSHIFT_PROJECT} ${OPENSHIFT_PROJECT_DESCRIPTION+"--description"} ${OPENSHIFT_PROJECT_DESCRIPTION} ${OPENSHIFT_PROJECT_DISPLAY_NAME+"--display-name"} ${OPENSHIFT_PROJECT_DISPLAY_NAME} || { echo "FAILED: could not create project" && exit 1 ; }
-
 oc whoami || oc login master.rhsademo.net -u ${OPENSHIFT_USER} -p ${OPENSHIFT_RHSADEMO_USER_PASSWORD_DEFAULT}
+echo "	--> create a project for our work"
+oc project ${OPENSHIFT_PROJECT} || oc new-project ${OPENSHIFT_PROJECT} ${OPENSHIFT_PROJECT_DESCRIPTION:+"--description"} ${OPENSHIFT_PROJECT_DESCRIPTION} ${OPENSHIFT_PROJECT_DISPLAY_NAME:+"--display-name"} ${OPENSHIFT_PROJECT_DISPLAY_NAME} || { echo "FAILED: could not create project" && exit 1 ; }
+
 echo "========== STATUS QUO deployment =========="
 echo "		--> press enter to continue" && read
 
@@ -129,11 +129,16 @@ oc set probe dc/canary --liveness --readiness --get-url=http://:8080/healthcheck
 
 echo "	--> validating access to github"
 { curl -s -o /dev/null -w "%{http_code}" -i 'https://api.github.com/repos/michaelepley/phpmysqldemo' -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_PLAINTEXT:-`echo ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_CIPHERTEXT} | openssl enc -d -a | openssl enc -d -aes-256-cbc -k ${SCRIPT_ENCRYPTION_KEY}`}" && echo ""; } || { echo "FAILED: cannot validate access to github" && exit 1; }
-echo "	--> checking existing webhooks"
-curl -s 'https://api.github.com/repos/michaelepley/phpmysqldemo/hooks' -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_PLAINTEXT:-`echo ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_CIPHERTEXT} | openssl enc -d -a | openssl enc -d -aes-256-cbc -k ${SCRIPT_ENCRYPTION_KEY}`}"
+#echo "	--> checking existing webhooks"
+#curl -s 'https://api.github.com/repos/michaelepley/phpmysqldemo/hooks' -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_PLAINTEXT:-`echo ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_CIPHERTEXT} | openssl enc -d -a | openssl enc -d -aes-256-cbc -k ${SCRIPT_ENCRYPTION_KEY}`}" | jq '.[].id'
 echo "	--> get canary application github webhook url"
 { oc get bc/canary && OPENSHIFT_APPLICATION_PHP_WEBHOOK_GITHUB=`oc describe bc/canary | grep github | grep webhooks | awk '{printf $2}'`; } || { echo "FAILED: Could not get metadata about the canary build" && exit 1; }
-echo "	--> add webhook to the php github project"
+echo "	--> delete any old webhooks to the phpmysqldemo github project"
+for OPENSHIFT_APPLICATION_PHP_WEBHOOK_GITHUB_ID in $(curl -s -X GET 'https://api.github.com/repos/michaelepley/phpmysqldemo/hooks' -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_PLAINTEXT:-`echo ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_CIPHERTEXT} | openssl enc -d -a | openssl enc -d -aes-256-cbc -k ${SCRIPT_ENCRYPTION_KEY}`}" | jq '.[].id') ; do 
+	curl -i -X DELETE -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_PLAINTEXT:-`echo ${GITHUB_AUTHORIZATION_TOKEN_OPENSHIFT_DEMO_CIPHERTEXT} | openssl enc -d -a | openssl enc -d -aes-256-cbc -k ${SCRIPT_ENCRYPTION_KEY}`}" 'https://api.github.com/repos/michaelepley/phpmysqldemo/hooks/'${OPENSHIFT_APPLICATION_PHP_WEBHOOK_GITHUB_ID} 
+done
+
+echo "	--> add new webhook to the phpmysqldemo github project"
 OPENSHIFT_APPLICATION_PHP_WEBHOOK_GITHUB_CONFIG=$(cat <<EOF_OPENSHIFT_APPLICATION_PHP_WEBHOOK_GITHUB_CONFIG
 {
   "name": "web",

@@ -2,15 +2,15 @@
     "apiVersion": "v1",
     "kind": "Route",
     "metadata": {
-        "creationTimestamp": "2017-06-08T14:18:23Z",
+        "creationTimestamp": "2017-06-08T17:28:44Z",
         "labels": {
             "app": "myphp"
         },
         "name": "devnation-visitors",
         "namespace": "mepley-devnation-federal-2017",
-        "resourceVersion": "9171880",
+        "resourceVersion": "9181124",
         "selfLink": "/oapi/v1/namespaces/mepley-devnation-federal-2017/routes/devnation-visitors",
-        "uid": "5477d6a6-4c55-11e7-83f7-121b3566b20e"
+        "uid": "ec5e0967-4c6f-11e7-83f7-121b3566b20e"
     },
     "spec": {
         "host": "devnation-visitors.apps.rhsademo.net",
@@ -29,7 +29,7 @@
             {
                 "conditions": [
                     {
-                        "lastTransitionTime": "2017-06-08T14:18:23Z",
+                        "lastTransitionTime": "2017-06-08T17:28:44Z",
                         "status": "True",
                         "type": "Admitted"
                     }

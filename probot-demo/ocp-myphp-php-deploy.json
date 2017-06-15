@@ -5,7 +5,7 @@
         "annotations": {
             "openshift.io/generated-by": "OpenShiftNewApp"
         },
-        "creationTimestamp": "2017-06-08T14:18:14Z",
+        "creationTimestamp": "2017-06-08T17:28:37Z",
         "generation": 3,
         "labels": {
             "app": "myphp",
@@ -14,9 +14,9 @@
         },
         "name": "php",
         "namespace": "mepley-devnation-federal-2017",
-        "resourceVersion": "9171848",
+        "resourceVersion": "9181091",
         "selfLink": "/oapi/v1/namespaces/mepley-devnation-federal-2017/deploymentconfigs/php",
-        "uid": "4f255006-4c55-11e7-83f7-121b3566b20e"
+        "uid": "e8127a9c-4c6f-11e7-83f7-121b3566b20e"
     },
     "spec": {
         "replicas": 1,
@@ -147,7 +147,7 @@
     "status": {
         "conditions": [
             {
-                "lastTransitionTime": "2017-06-08T14:18:14Z",
+                "lastTransitionTime": "2017-06-08T17:28:37Z",
                 "message": "Deployment config does not have minimum availability.",
                 "status": "False",
                 "type": "Available"

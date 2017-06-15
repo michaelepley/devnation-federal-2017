@@ -6,7 +6,7 @@
             "openshift.io/generated-by": "OpenShiftNewApp",
             "service.alpha.openshift.io/dependencies": "[ { \"name\" : \"mysql\" , \"kind\" : \"Service\"  } ]"
         },
-        "creationTimestamp": "2017-06-08T14:18:14Z",
+        "creationTimestamp": "2017-06-08T17:28:37Z",
         "labels": {
             "app": "myphp",
             "demophase": "statusquo",
@@ -14,12 +14,12 @@
         },
         "name": "php",
         "namespace": "mepley-devnation-federal-2017",
-        "resourceVersion": "9171882",
+        "resourceVersion": "9181125",
         "selfLink": "/api/v1/namespaces/mepley-devnation-federal-2017/services/php",
-        "uid": "4f298104-4c55-11e7-83f7-121b3566b20e"
+        "uid": "e818d203-4c6f-11e7-83f7-121b3566b20e"
     },
     "spec": {
-        "clusterIP": "172.30.128.201",
+        "clusterIP": "172.30.82.191",
         "ports": [
             {
                 "name": "8080-tcp",

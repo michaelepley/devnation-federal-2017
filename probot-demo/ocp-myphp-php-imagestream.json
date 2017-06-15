@@ -5,7 +5,7 @@
         "annotations": {
             "openshift.io/generated-by": "OpenShiftNewApp"
         },
-        "creationTimestamp": "2017-06-08T14:18:14Z",
+        "creationTimestamp": "2017-06-08T17:28:37Z",
         "generation": 1,
         "labels": {
             "app": "myphp",
@@ -14,9 +14,9 @@
         },
         "name": "php",
         "namespace": "mepley-devnation-federal-2017",
-        "resourceVersion": "9171826",
+        "resourceVersion": "9181072",
         "selfLink": "/oapi/v1/namespaces/mepley-devnation-federal-2017/imagestreams/php",
-        "uid": "4f21c6f3-4c55-11e7-83f7-121b3566b20e"
+        "uid": "e80ea897-4c6f-11e7-83f7-121b3566b20e"
     },
     "spec": {},
     "status": {
